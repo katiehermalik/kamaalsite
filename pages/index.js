@@ -1,65 +1,67 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { useState, useEffect } from 'react';
+import HeroSection from '../components/HeroSection';
+import AboutSection from '../components/AboutSection';
+import HeadshotsSection from '../components/HeadshotsSection';
+import MediaSection from '../components/MediaSection';
+import ContactSection from '../components/ContactSection';
 
 export default function Home() {
+  const [offset, setOffset] = useState(0);
+  
+  useEffect(() => {
+    function handleScroll() {
+      setOffset(window.pageYOffset)
+    }
+    window.addEventListener("scroll", handleScroll)
+    console.log(offset)
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+    }
+  }, [])
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+    <div className="main-content">
+      <HeroSection />
+      <div className="burrito-container divider">
+        <div 
+          className="burrito"
+          style={{transform: `translateY(${offset * -1}px)`}}>
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+      </div>
+      <AboutSection />
+      <section className="detroit-container city-slide divider">
+        <div 
+          className="detroit-right city divider-content"
+          style={{transform: `translateX(${offset > 800? offset * 0.2 : console.log(offset)}px)`}}
+          >
+        </div>
+        <div 
+          className="detroit-left city divider-content"
+          style={{transform: `translateX(${offset > 800? offset * -0.5 : console.log(offset)}px)`}}
+          >
+        </div>
+      </section>
+      <HeadshotsSection />
+      <section className="la-container city-slide divider">
+        <div 
+          className="LA-right city divider-content"
+          style={{transform: `translateX(${offset > 800? offset * 0.2 : console.log(offset)}px)`}}
+          >
+        </div>
+        <div 
+          className="LA-left city divider-content"
+          style={{transform: `translateX(${offset > 800? offset * -0.5 : console.log(offset)}px)`}}
+          >
+        </div>
+      </section>
+      <MediaSection />
+      <div className="camera-container divider">
+        <div 
+          className="camera"
+          style={{transform: `translateY(${offset > 200? offset * -0.5 : console.log(offset)}px)`}}>
+        </div>
+      </div>
+      <ContactSection />
     </div>
   )
 }
